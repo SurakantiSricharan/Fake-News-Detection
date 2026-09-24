@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VeritasAI — Deep Learning Fake News Intelligence Platform</title>
+    <meta name="description" content="State-of-the-art Deep Learning and NLP Misinformation Intelligence Platform. Real-time verification, XAI attention heatmaps, stylometric deception forensics, and model benchmarking.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Chart.js for visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Background Ambient Glows -->
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <!-- Header Navigation -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand-group">
+                <div class="brand-logo-badge">
+                    <span class="logo-icon">🛡️</span>
+                </div>
+                <div class="brand-text">
+                    <div class="brand-title">
+                        <span class="gradient-text">Veritas</span>AI
+                        <span class="version-tag">v2.0 DL</span>
+                    </div>
+                    <p class="brand-subtitle">Deep Learning Fake News & Misinformation Intelligence Platform</p>
+                </div>
+            </div>
+
+            <!-- Main Nav Tabs -->
+            <nav class="nav-tabs" role="tablist">
+                <button class="nav-tab active" data-tab="scanner-view" id="tab-scanner">
+                    <span class="tab-icon">⚡</span> Scanner
+                </button>
+                <button class="nav-tab" data-tab="social-radar-view" id="tab-social-radar">
+                    <span class="tab-icon">📡</span> Social Radar <span class="badge-live-pulse">LIVE</span>
+                </button>
+                <button class="nav-tab" data-tab="cases-view" id="tab-cases">
+                    <span class="tab-icon">📁</span> Case Studies
+                </button>
+                <button class="nav-tab" data-tab="benchmark-view" id="tab-benchmark">
+                    <span class="tab-icon">📊</span> Model Benchmarks
+                </button>
+                <button class="nav-tab" data-tab="history-view" id="tab-history">
+                    <span class="tab-icon">📜</span> Audit History
+                </button>
+                <button class="nav-tab" data-tab="about-view" id="tab-about">
+                    <span class="tab-icon">🎓</span> Project Specs
+                </button>
+            </nav>
+
+            <div class="header-status">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span class="status-text">BiLSTM & Neural Ensemble Ready</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- 1. SCANNER VIEW -->
+        <section id="scanner-view" class="tab-content active">
+            <div class="scanner-grid">
+                <!-- Input Column -->
+                <div class="card glass-card input-card">
+                    <div class="card-header">
+                        <div class="header-title-wrap">
+                            <h2 class="card-title">News Verification Input</h2>
+                            <p class="card-description">Paste raw text or extract directly from a live web URL</p>
+                        </div>
+                        <!-- Mode Switcher -->
+                        <div class="mode-toggle">
+                            <button class="mode-btn active" id="mode-text-btn">
+                                <span>📝</span> Text / Article
+                            </button>
+                            <button class="mode-btn" id="mode-url-btn">
+                                <span>🌐</span> Live Web URL
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Direct Text Form -->
+                    <div id="form-text-mode" class="input-form">
+                        <div class="form-group">
+                            <label for="input-headline">Article Headline / Title (Optional)</label>
+                            <input type="text" id="input-headline" class="glass-input" placeholder="e.g. NASA Mars Rover Discovers Evidence of Past Habitability...">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="label-row">
+                                <label for="input-body">News Article Body / Claim Text <span class="required">*</span></label>
+                                <span class="char-count" id="text-char-count">0 characters</span>
+                            </div>
+                            <textarea id="input-body" class="glass-textarea" rows="8" placeholder="Paste full article text, news report snippet, or social media claim to detect deception patterns, clickbait, and linguistic inconsistencies..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-source-domain">Source Domain or Publication (Optional)</label>
+                            <input type="text" id="input-source-domain" class="glass-input" placeholder="e.g. reuters.com, nytimes.com, or leave blank">
+                        </div>
+
+                        <!-- Sample Quick Injectors -->
+                        <div class="sample-chips">
+                            <span class="chips-label">Quick Test Samples:</span>
+                            <button type="button" class="chip-btn" id="chip-real-science">🧪 Verified Science News</button>
+                            <button type="button" class="chip-btn" id="chip-fake-health">⚠️ Miracle Cure Hoax</button>
+                            <button type="button" class="chip-btn" id="chip-fake-5g">📡 5G Conspiracy Claim</button>
+                            <button type="button" class="chip-btn" id="chip-satire-onion">🧅 The Onion Satire</button>
+                        </div>
+                    </div>
+
+                    <!-- Live URL Form -->
+                    <div id="form-url-mode" class="input-form" style="display: none;">
+                        <div class="url-hero-box">
+                            <span class="url-icon">🌐</span>
+                            <div class="url-hero-text">
+                                <h3>Automated Live Web Scraper</h3>
+                                <p>Provide any online news article URL. VeritasAI will automatically fetch the headline, author, date, and body text, stripping away advertising clutter.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-url">Article Web URL <span class="required">*</span></label>
+                            <div class="input-action-wrap">
+                                <input type="url" id="input-url" class="glass-input" placeholder="https://www.reuters.com/world/us/example-story...">
+                                <button type="button" class="paste-btn" id="btn-paste-url" title="Paste URL from Clipboard">📋 Paste</button>
+                            </div>
+                        </div>
+
+                        <div class="sample-chips">
+                            <span class="chips-label">Live Test URLs:</span>
+                            <button type="button" class="chip-btn" id="chip-url-reuters">Reuters Tech News</button>
+                            <button type="button" class="chip-btn" id="chip-url-bbc">BBC Science</button>
+                            <button type="button" class="chip-btn" id="chip-url-onion">The Onion Parody</button>
+                        </div>
+                    </div>
+
+                    <!-- Action Bar -->
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-secondary" id="btn-clear-input">
+                            Clear
+                        </button>
+                        <button type="button" class="btn btn-primary" id="btn-run-analysis">
+                            <span class="btn-spinner" id="btn-spinner" style="display: none;"></span>
+                            <span class="btn-icon">⚡</span>
+                            <span id="btn-action-text">Run Neural Verification</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results & Telemetry Column -->
+                <div class="card glass-card results-card" id="results-container">
+                    <!-- Default Empty State -->
+                    <div id="empty-state" class="empty-state">
+                        <div class="empty-icon-shield">🛡️</div>
+                        <h3>Deep Learning Verification Pipeline Ready</h3>
+                        <p>Submit news text or an online URL to initiate sequence tokenization, BiLSTM temporal feature extraction, and stylometric deception forensics.</p>
+                        <div class="pipeline-steps">
+                            <div class="step-pill">1. Preprocessing & Clean</div>
+                            <div class="step-arrow">→</div>
+                            <div class="step-pill">2. BiLSTM & CNN Layers</div>
+                            <div class="step-arrow">→</div>
+                            <div class="step-pill">3. XAI Attention Heatmap</div>
+                        </div>
+                    </div>
+
+                    <!-- Live Loading State -->
+                    <div id="loading-state" class="loading-state" style="display: none;">
+                        <div class="neural-pulse-loader">
+                            <div class="pulse-ring"></div>
+                            <div class="pulse-core">🧠</div>
+                        </div>
+                        <h3 id="loading-title">Processing Neural Embeddings...</h3>
+                        <p id="loading-subtitle">Extracting sequential context & computing stylometric vectors</p>
+                    </div>
+
+                    <!-- Populated Results Content -->
+                    <div id="verdict-content" style="display: none;" class="verdict-wrapper">
+                        <!-- Top Verdict Banner -->
+                        <div class="verdict-banner" id="verdict-banner">
+                            <div class="verdict-badge-wrap">
+                                <span class="verdict-indicator-icon" id="verdict-icon">✅</span>
+                                <div class="verdict-label-block">
+                                    <span class="verdict-sub">Classification Verdict</span>
+                                    <h2 class="verdict-headline" id="verdict-title">REAL NEWS</h2>
+                                </div>
+                            </div>
+                            <div class="verdict-meta">
+                                <span class="model-badge" id="verdict-model-used">BiLSTM-CNN-Attention</span>
+                                <span class="scan-id-tag" id="verdict-scan-id">#ID-001</span>
+                            </div>
+                        </div>
+
+                        <!-- Scraped Article Metadata (if URL mode) -->
+                        <div id="scraped-meta-box" class="scraped-meta-box" style="display: none;">
+                            <div class="meta-row">
+                                <span class="meta-item"><strong id="scraped-meta-title"></strong></span>
+                            </div>
+                            <div class="meta-row meta-details">
+                                <span>🌐 <span id="scraped-meta-domain"></span></span>
+                                <span>✍️ <span id="scraped-meta-author"></span></span>
+                                <span>📅 <span id="scraped-meta-date"></span></span>
+                                <span>📑 <span id="scraped-meta-words"></span> words</span>
+                            </div>
+                        </div>
+
+                        <!-- Primary Gauges Row -->
+                        <div class="gauges-row">
+                            <!-- Circular Animated Confidence Gauge -->
+                            <div class="gauge-card glass-subcard">
+                                <div class="gauge-title">Prediction Confidence</div>
+                                <div class="radial-gauge-container">
+                                    <svg class="radial-svg" viewBox="0 0 120 120">
+                                        <circle class="gauge-bg" cx="60" cy="60" r="50" />
+                                        <circle class="gauge-bar" id="gauge-progress-bar" cx="60" cy="60" r="50" />
+                                    </svg>
+                                    <div class="gauge-value-center">
+                                        <span class="gauge-number" id="confidence-percentage">0%</span>
+                                        <span class="gauge-sub">CERTAINTY</span>
+                                    </div>
+                                </div>
+                                <div class="prob-split-bar">
+                                    <div class="split-segment real-seg" id="real-prob-bar" style="width: 50%;">Real: 50%</div>
+                                    <div class="split-segment fake-seg" id="fake-prob-bar" style="width: 50%;">Fake: 50%</div>
+                                </div>
+                            </div>
+
+                            <!-- Stylometrics Radar/Summary -->
+                            <div class="stylometrics-card glass-subcard">
+                                <div class="gauge-title">Linguistic Deception Forensics</div>
+                                <div class="metric-meter-list">
+                                    <div class="metric-meter-item">
+                                        <div class="meter-info">
+                                            <span>Clickbait & Sensationalism</span>
+                                            <strong id="metric-clickbait">0%</strong>
+                                        </div>
+                                        <div class="meter-bar-track">
+                                            <div class="meter-bar-fill fill-rose" id="bar-clickbait" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="metric-meter-item">
+                                        <div class="meter-info">
+                                            <span>Subjectivity & Bias</span>
+                                            <strong id="metric-subjectivity">0%</strong>
+                                        </div>
+                                        <div class="meter-bar-track">
+                                            <div class="meter-bar-fill fill-cyan" id="bar-subjectivity" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="metric-meter-item">
+                                        <div class="meter-info">
+                                            <span>Uppercase & Agitation</span>
+                                            <strong id="metric-caps">0%</strong>
+                                        </div>
+                                        <div class="meter-bar-track">
+                                            <div class="meter-bar-fill fill-amber" id="bar-caps" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="metric-meter-item">
+                                        <div class="meter-info">
+                                            <span>Source Domain Trust</span>
+                                            <strong id="metric-domain-trust">Neutral</strong>
+                                        </div>
+                                        <div class="meter-bar-track">
+                                            <div class="meter-bar-fill fill-emerald" id="bar-domain-trust" style="width: 50%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Explainable AI (XAI) Word Attention Heatmap -->
+                        <div class="xai-section glass-subcard">
+                            <div class="xai-header">
+                                <div>
+                                    <h4 class="xai-title">Explainable AI (XAI) Token Attention Heatmap</h4>
+                                    <p class="xai-description">Neural token attribution: Highlights linguistic drivers of the verdict.</p>
+                                </div>
+                                <div class="xai-legend">
+                                    <span class="legend-item"><span class="legend-color legend-suspicious"></span> Deceptive Cue</span>
+                                    <span class="legend-item"><span class="legend-color legend-factual"></span> Factual / Objective</span>
+                                    <span class="legend-item"><span class="legend-color legend-neutral"></span> Neutral</span>
+                                </div>
+                            </div>
+                            <div class="heatmap-container" id="xai-tokens-container">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- Key Diagnostic Drivers & Reasons -->
+                        <div class="reasons-section glass-subcard">
+                            <h4 class="reasons-title">Key Algorithmic Observations:</h4>
+                            <ul class="reasons-list" id="reasons-list">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+
+                        <!-- Active Learning Feedback Bar -->
+                        <div class="feedback-bar">
+                            <span class="feedback-prompt">Help improve the model. Do you agree with this verdict?</span>
+                            <div class="feedback-actions">
+                                <button type="button" class="btn-fb btn-fb-agree" id="btn-fb-agree">👍 Agree</button>
+                                <button type="button" class="btn-fb btn-fb-disagree" id="btn-fb-disagree">👎 Disagree</button>
+                            </div>
+                            <span class="feedback-msg" id="feedback-acknowledgement"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. AUTOMATED SOCIAL MEDIA & LIVE STREAM RADAR VIEW -->
+        <section id="social-radar-view" class="tab-content">
+            <!-- Header with Auto-Pilot & Radar Sweep -->
+            <div class="radar-hero-banner glass-card">
+                <div class="radar-hero-info">
+                    <div class="radar-title-group">
+                        <div class="radar-badge-pulse">
+                            <span class="radar-icon">📡</span>
+                            <span class="radar-ping"></span>
+                        </div>
+                        <div>
+                            <h2 class="section-title">Automated Social Media & Live Disinformation Radar</h2>
+                            <p class="section-desc">Autonomous multi-platform feed ingestion, continuous viral threat scanning, and batch sequence classification across Reddit, Global News Wires, and Viral Social Feeds.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auto-Pilot Toggle Box -->
+                <div class="autopilot-toggle-card">
+                    <div class="autopilot-text">
+                        <div class="autopilot-title">
+                            <span class="pulse-dot-green" id="autopilot-pulse-indicator" style="display: none;"></span>
+                            <strong id="autopilot-status-label">Auto-Pilot: OFF</strong>
+                        </div>
+                        <span class="autopilot-desc" id="autopilot-desc">Continuous real-time stream polling & instant viral fake news alert notifications</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="autopilot-checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Controls & Feed Selector Card -->
+            <div class="card glass-card social-control-card">
+                <!-- Platform Selector Bar -->
+                <div class="social-platforms-row">
+                    <span class="filter-label">Live Ingestion Platform:</span>
+                    <div class="platform-chips-wrap">
+                        <button type="button" class="platform-chip active" data-platform="all">
+                            <span>🌐</span> All Live Sources
+                        </button>
+                        <button type="button" class="platform-chip" data-platform="reddit">
+                            <span>🤖</span> Reddit Live (r/news, r/conspiracy)
+                        </button>
+                        <button type="button" class="platform-chip" data-platform="news_wire">
+                            <span>📰</span> Global News Wires (BBC, NPR, Verge)
+                        </button>
+                        <button type="button" class="platform-chip" data-platform="simulated">
+                            <span>🐦</span> Viral Social Stream (X/Threads)
+                        </button>
+                        <button type="button" class="platform-chip" data-platform="google_news">
+                            <span>🔍</span> Google News Topic Search
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Channel, Search & Action Controls -->
+                <div class="social-input-row">
+                    <!-- Specific Channel / Subreddit Dropdown -->
+                    <div class="control-col channel-select-col">
+                        <label for="social-channel-select">Channel / Subreddit</label>
+                        <select id="social-channel-select" class="glass-select">
+                            <option value="">⚡ Auto-Aggregate (Top Feeds)</option>
+                            <option value="news">r/news (Breaking General News)</option>
+                            <option value="conspiracy">r/conspiracy (Viral Claims & Conspiracies)</option>
+                            <option value="worldnews">r/worldnews (Global International Affairs)</option>
+                            <option value="technology">r/technology (Tech & Digital Issues)</option>
+                            <option value="science">r/science (Scientific Findings)</option>
+                            <option value="bbc">BBC News World (RSS)</option>
+                            <option value="npr">NPR National News (RSS)</option>
+                            <option value="verge">The Verge (Tech & Media)</option>
+                            <option value="hackernews">Hacker News Top Discussions</option>
+                            <option value="theonion">The Onion (Satire / Parody Benchmark)</option>
+                        </select>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="control-col search-col">
+                        <label for="social-search-input">Topic, Keyword, or Hashtag</label>
+                        <div class="input-action-wrap">
+                            <input type="text" id="social-search-input" class="glass-input" placeholder="e.g. #HealthHoaxes, MarsRover, FederalReserve, Vaccine...">
+                            <button type="button" class="btn btn-secondary btn-icon-only" id="btn-clear-social-search" title="Clear Search">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- Scan Action Button -->
+                    <div class="control-col action-col">
+                        <button type="button" class="btn btn-primary btn-social-scan" id="btn-scan-social">
+                            <span class="btn-spinner" id="social-spinner" style="display: none;"></span>
+                            <span class="btn-icon">⚡</span>
+                            <span>Fetch & Verify Stream</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trending Topic Quick Chips -->
+                <div class="social-trending-row">
+                    <span class="chips-label">Trending Threat Topics:</span>
+                    <div class="trend-chips-container" id="trend-chips-container">
+                        <button type="button" class="trend-pill" data-query="#HealthHoaxes">⚠️ #HealthHoaxes</button>
+                        <button type="button" class="trend-pill" data-query="#BreakingConspiracy">🚨 #BreakingConspiracy</button>
+                        <button type="button" class="trend-pill" data-query="#SpaceDiscovery">🧪 #SpaceDiscovery</button>
+                        <button type="button" class="trend-pill" data-query="#EconomyAlert">📈 #EconomyAlert</button>
+                        <button type="button" class="trend-pill" data-query="#AIControversy">🤖 #AIControversy</button>
+                        <button type="button" class="trend-pill" data-query="#SatireWire">🧅 #SatireWire</button>
+                    </div>
+
+                    <!-- Export Buttons -->
+                    <div class="export-group">
+                        <button type="button" class="btn-export-small" id="btn-export-social-csv" title="Export Stream Telemetry to CSV">
+                            📥 CSV
+                        </button>
+                        <button type="button" class="btn-export-small" id="btn-export-social-json" title="Export Stream Telemetry to JSON">
+                            📥 JSON
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stream Disinformation Intelligence KPIs (4 Metrics) -->
+            <div class="social-kpi-grid">
+                <div class="kpi-card glass-card">
+                    <div class="kpi-header">
+                        <span class="kpi-icon">📊</span>
+                        <span class="kpi-title">Monitored Posts</span>
+                    </div>
+                    <div class="kpi-value" id="kpi-total-posts">0</div>
+                    <div class="kpi-sub" id="kpi-source-summary">Across active public feeds</div>
+                </div>
+
+                <div class="kpi-card glass-card kpi-threat">
+                    <div class="kpi-header">
+                        <span class="kpi-icon">🚨</span>
+                        <span class="kpi-title">Misinformation Prevalence</span>
+                    </div>
+                    <div class="kpi-value text-danger" id="kpi-misinfo-rate">0.0%</div>
+                    <div class="kpi-progress-bar">
+                        <div class="kpi-progress-fill" id="kpi-misinfo-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div class="kpi-card glass-card kpi-alerts">
+                    <div class="kpi-header">
+                        <span class="kpi-icon">🔥</span>
+                        <span class="kpi-title">Critical Viral Threats</span>
+                    </div>
+                    <div class="kpi-value text-rose" id="kpi-critical-alerts">0</div>
+                    <div class="kpi-sub">High virality + fake score</div>
+                </div>
+
+                <div class="kpi-card glass-card">
+                    <div class="kpi-header">
+                        <span class="kpi-icon">⚡</span>
+                        <span class="kpi-title">Sensationalism & Clickbait</span>
+                    </div>
+                    <div class="kpi-value text-amber" id="kpi-avg-clickbait">0.0%</div>
+                    <div class="kpi-sub">Linguistic agitation index</div>
+                </div>
+            </div>
+
+            <!-- Filter & Sub-bar -->
+            <div class="feed-filter-bar">
+                <div class="feed-status-text">
+                    <span class="pulse-dot"></span>
+                    <span id="feed-status-label">Stream ready. Click "Fetch & Verify Stream" or toggle Auto-Pilot.</span>
+                </div>
+                <div class="feed-view-filters">
+                    <button type="button" class="feed-filter-btn active" data-filter="all">All Posts</button>
+                    <button type="button" class="feed-filter-btn" data-filter="fake">🚨 Flagged Deceptive</button>
+                    <button type="button" class="feed-filter-btn" data-filter="real">✅ Verified Real</button>
+                    <button type="button" class="feed-filter-btn" data-filter="critical">🔥 Critical Viral</button>
+                </div>
+            </div>
+
+            <!-- Stream Loading State -->
+            <div id="social-loading-state" class="loading-state glass-card" style="display: none; margin-top: 1.5rem;">
+                <div class="neural-pulse-loader">
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-core">📡</div>
+                </div>
+                <h3>Ingesting & Verifying Live Social Stream...</h3>
+                <p>Querying external RSS/Atom channels and running BiLSTM neural sequence verification on all claims.</p>
+            </div>
+
+            <!-- Social Feed Cards Grid -->
+            <div class="social-feed-grid" id="social-feed-container">
+                <!-- Dynamically populated with authentic social cards -->
+            </div>
+        </section>
+
+        <!-- 3. CASE STUDIES VIEW -->
+        <section id="cases-view" class="tab-content">
+            <div class="section-intro">
+                <h2 class="section-title">Pre-Loaded Real-World Case Studies</h2>
+                <p class="section-desc">Test notorious viral hoaxes, conspiracy claims, and verified journalistic articles with one click.</p>
+            </div>
+            <div class="cases-grid" id="cases-grid-container">
+                <!-- Populated dynamically from /api/case-studies -->
+            </div>
+        </section>
+
+        <!-- 3. MODEL BENCHMARKS VIEW -->
+        <section id="benchmark-view" class="tab-content">
+            <div class="section-intro">
+                <h2 class="section-title">Deep Learning Architecture Benchmarks</h2>
+                <p class="section-desc">Performance evaluation across LSTM, BiLSTM, CNN, and BERT models as specified in Chapter 5 of the Project Report.</p>
+            </div>
+
+            <!-- Top Metric Highlights -->
+            <div class="benchmark-summary-cards">
+                <div class="card glass-card stat-card">
+                    <span class="stat-label">Project Model Accuracy</span>
+                    <span class="stat-value text-cyan">96.2%</span>
+                    <span class="stat-sub">BiLSTM + Attention</span>
+                </div>
+                <div class="card glass-card stat-card">
+                    <span class="stat-label">F1-Score (Balanced)</span>
+                    <span class="stat-value text-emerald">96.1%</span>
+                    <span class="stat-sub">Precision: 95.8% | Recall: 96.5%</span>
+                </div>
+                <div class="card glass-card stat-card">
+                    <span class="stat-label">Inference Latency</span>
+                    <span class="stat-value text-amber">18.4 ms</span>
+                    <span class="stat-sub">Real-Time Web Scans</span>
+                </div>
+                <div class="card glass-card stat-card">
+                    <span class="stat-label">Area Under Curve (AUC)</span>
+                    <span class="stat-value text-purple">0.988</span>
+                    <span class="stat-sub">High Discrimination Power</span>
+                </div>
+            </div>
+
+            <!-- Comparative Charts -->
+            <div class="benchmark-grid">
+                <div class="card glass-card">
+                    <h3 class="card-title">Model Comparison Metrics (Accuracy, Precision, Recall, F1)</h3>
+                    <div class="chart-box">
+                        <canvas id="chart-models-bar"></canvas>
+                    </div>
+                </div>
+
+                <div class="card glass-card">
+                    <h3 class="card-title">Confusion Matrix (Evaluation on Unseen Test Split)</h3>
+                    <div class="confusion-matrix-display" id="cm-display">
+                        <div class="cm-cell cm-tp">
+                            <span class="cm-label">True Positives (Real News)</span>
+                            <span class="cm-val" id="cm-tp-val">116</span>
+                            <span class="cm-rate">96.7% Hit Rate</span>
+                        </div>
+                        <div class="cm-cell cm-fp">
+                            <span class="cm-label">False Positives (Type I)</span>
+                            <span class="cm-val" id="cm-fp-val">5</span>
+                            <span class="cm-rate">Low Misclassification</span>
+                        </div>
+                        <div class="cm-cell cm-fn">
+                            <span class="cm-label">False Negatives (Type II)</span>
+                            <span class="cm-val" id="cm-fn-val">4</span>
+                            <span class="cm-rate">Minimal Misses</span>
+                        </div>
+                        <div class="cm-cell cm-tn">
+                            <span class="cm-label">True Negatives (Fake News)</span>
+                            <span class="cm-val" id="cm-tn-val">115</span>
+                            <span class="cm-rate">95.8% True Catch</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card glass-card">
+                    <h3 class="card-title">Training Loss & Convergence History (5 Epochs)</h3>
+                    <div class="chart-box">
+                        <canvas id="chart-loss-curve"></canvas>
+                    </div>
+                </div>
+
+                <div class="card glass-card">
+                    <h3 class="card-title">Deep Learning Architecture Comparison Table</h3>
+                    <div class="table-container">
+                        <table class="data-table" id="benchmarks-table">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Architecture</th>
+                                    <th>Accuracy</th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>Latency</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarks-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. AUDIT HISTORY VIEW -->
+        <section id="history-view" class="tab-content">
+            <div class="section-intro">
+                <div class="intro-with-actions">
+                    <div>
+                        <h2 class="section-title">Audit Trail & Verification History</h2>
+                        <p class="section-desc">Persistent SQLite database logging all queries, predictions, stylometrics, and telemetry.</p>
+                    </div>
+                    <div class="history-actions">
+                        <select id="history-filter" class="glass-select">
+                            <option value="all">All Verdicts</option>
+                            <option value="Real News">Real News Only</option>
+                            <option value="Fake News">Fake News Only</option>
+                            <option value="Uncertain">Uncertain Only</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" id="btn-export-csv">📥 Export CSV</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Table -->
+            <div class="card glass-card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Title / Headline</th>
+                                <th>Type</th>
+                                <th>Domain</th>
+                                <th>Verdict</th>
+                                <th>Confidence</th>
+                                <th>Clickbait</th>
+                                <th>Feedback</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ABOUT & PROJECT SPECIFICATIONS VIEW -->
+        <section id="about-view" class="tab-content">
+            <div class="section-intro">
+                <h2 class="section-title">Academic Project Specifications</h2>
+                <p class="section-desc">Implementation reference mapping directly to the Capstone Project Report.</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="card glass-card">
+                    <div class="project-credential-badge">
+                        <span class="cred-icon">🎓</span>
+                        <div>
+                            <h3>Bachelor of Technology Capstone Project</h3>
+                            <p>Department of Computer Science and Engineering (Artificial Intelligence and Machine Learning)</p>
+                            <p><strong>MALLA REDDY UNIVERSITY</strong>, Hyderabad, Telangana — 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="meta-fields-list">
+                        <div class="meta-field">
+                            <span class="mf-label">Project Title:</span>
+                            <span class="mf-val">Fake news detection using deep learning</span>
+                        </div>
+                        <div class="meta-field">
+                            <span class="mf-label">Candidate:</span>
+                            <span class="mf-val"><strong>S Sricharan</strong> (Roll No: <strong>2311CS020639</strong>)</span>
+                        </div>
+                        <div class="meta-field">
+                            <span class="mf-label">Project Guide:</span>
+                            <span class="mf-val">Dr. G. Hariharan, Associate Professor</span>
+                        </div>
+                        <div class="meta-field">
+                            <span class="mf-label">Head of Department:</span>
+                            <span class="mf-val">Dr. R Nagaraju, CSE (AI & ML)</span>
+                        </div>
+                        <div class="meta-field">
+                            <span class="mf-label">Dean, School of Engineering:</span>
+                            <span class="mf-val">Dr. G. Gifta Jerith</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card glass-card">
+                    <h3 class="card-title">Report Architecture & Code Mapping</h3>
+                    <div class="mapping-list">
+                        <div class="mapping-item">
+                            <span class="map-chapter">Chapter 3: Methodology</span>
+                            <p>NLP Preprocessing pipeline (tokenization, stopword filtering, lemmatization, sequence padding) implemented in <code>models/nlp_engine.py</code>.</p>
+                        </div>
+                        <div class="mapping-item">
+                            <span class="map-chapter">Chapter 4: System Design</span>
+                            <p>RESTful API layer, SQLite database persistence, and Explainable AI (XAI) keyword indicators implemented in <code>app.py</code> and <code>database.py</code>.</p>
+                        </div>
+                        <div class="mapping-item">
+                            <span class="map-chapter">Chapter 5.1: Source Code</span>
+                            <p>Faithful scripts <code>model_training.py</code> and <code>predict_news.py</code> executable directly via CLI as documented on pages 28–29.</p>
+                        </div>
+                        <div class="mapping-item">
+                            <span class="map-chapter">Real-World Enhancements</span>
+                            <p>Live article URL scraper, stylometric deception forensics, interactive token attention heatmaps, and full-stack cyber-glassmorphic dashboard.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>VeritasAI — Advanced Deep Learning Fake News Intelligence Platform © 2025–2026. S Sricharan (2311CS020639).</p>
+            <div class="footer-links">
+                <a href="/docs" target="_blank" class="footer-link">Swagger REST API</a>
+                <span class="footer-dot">•</span>
+                <span class="footer-text">Malla Reddy University</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Live Alert Toasts Container -->
+    <div id="live-toast-container" class="live-toast-container"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
