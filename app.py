@@ -1,4 +1,4 @@
-"""
+﻿"""
 VeritasAI - FastAPI Server & REST API Endpoints
 Main application providing real-time fake news detection, web scraping,
 model benchmarking, SQLite audit trail, and explainable AI visualizations.
@@ -116,12 +116,12 @@ CASE_STUDIES = [
         "expected": "Satire / High Risk",
         "title": "Department of Transportation Installs Speed Bumps on Internet to Slow Spread of Bad Information",
         "domain": "theonion.com",
-        "text": "WASHINGTON—In an ambitious attempt to regulate the rapid velocity of modern digital discourse, the Federal Highway Administration announced Tuesday that it has begun deploying millions of virtual rubber speed bumps across global fiber-optic cables. Agency officials stated the newly installed digital speed humps will force high-speed packet traffic to decelerate from 100 megabits per second down to an orderly 15 miles per hour whenever entering controversial comment sections or clickbait headlines."
+        "text": "WASHINGTONâ€”In an ambitious attempt to regulate the rapid velocity of modern digital discourse, the Federal Highway Administration announced Tuesday that it has begun deploying millions of virtual rubber speed bumps across global fiber-optic cables. Agency officials stated the newly installed digital speed humps will force high-speed packet traffic to decelerate from 100 megabits per second down to an orderly 15 miles per hour whenever entering controversial comment sections or clickbait headlines."
     }
 ]
 
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 def serve_index():
     """Serve main single-page application."""
     index_path = os.path.join(STATIC_DIR, "index.html")
@@ -224,11 +224,11 @@ def get_social_channels():
             {"id": k, "name": v["name"], "domain": v["domain"]} for k, v in NEWS_WIRE_FEEDS.items()
         ],
         "platforms": [
-            {"id": "all", "name": "🌐 All Live Sources (Auto-Aggregated)"},
-            {"id": "reddit", "name": "🤖 Reddit Public Feeds (Live)"},
-            {"id": "news_wire", "name": "📰 Global News Wires (RSS Live)"},
-            {"id": "google_news", "name": "🔍 Google News Live Search"},
-            {"id": "simulated", "name": "🐦 High-Velocity Viral Social Stream (X/Threads)"}
+            {"id": "all", "name": "ðŸŒ All Live Sources (Auto-Aggregated)"},
+            {"id": "reddit", "name": "ðŸ¤– Reddit Public Feeds (Live)"},
+            {"id": "news_wire", "name": "ðŸ“° Global News Wires (RSS Live)"},
+            {"id": "google_news", "name": "ðŸ” Google News Live Search"},
+            {"id": "simulated", "name": "ðŸ¦ High-Velocity Viral Social Stream (X/Threads)"}
         ]
     }
 
@@ -251,7 +251,7 @@ def get_social_feed(
 ):
     """
     Fetch and automatically verify social media posts and live news dispatches.
-    Zero manual user input required — pulls live from Reddit, News Wires, Google News, or Viral Social Streams.
+    Zero manual user input required â€” pulls live from Reddit, News Wires, Google News, or Viral Social Streams.
     """
     posts = []
 
@@ -427,4 +427,5 @@ def health_endpoint():
 
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
